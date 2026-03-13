@@ -6,8 +6,8 @@ on:
     - cron: '0 12 * * *'
   workflow_dispatch:
 
+# This section tells the runner to use Node 24 for everything
 env:
-  # This line tells GitHub to use the new Node 24 engine immediately
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -15,11 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        # v4 is the modern standard for 2026
         uses: actions/checkout@v4 
 
       - name: Set up Python
-        # v5 is the current stable version for 2026
         uses: actions/setup-python@v5 
         with:
           python-version: '3.11'
