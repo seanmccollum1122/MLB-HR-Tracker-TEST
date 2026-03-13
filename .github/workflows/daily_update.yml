@@ -6,7 +6,7 @@ on:
     - cron: '0 12 * * *'
   workflow_dispatch:
 
-# This section tells the runner to use Node 24 for everything
+# This tells the GitHub Runner to use Node 24 for all steps immediately
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
