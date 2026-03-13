@@ -1,0 +1,34 @@
+name: Daily MLB HR Sync
+
+on:
+  schedule:
+    # 12:00 UTC is 8:00 AM ET (Standard Time)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # This adds a "Run" button so you can test it manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests pandas openpyxl
+
+      - name: Run Scraper
+        run: python mlb_scraper.py # Make sure this matches your script's filename
+
+      - name: Commit and Push Excel File
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add MLB_2026_Team_Power.xlsx # Match the filename your script creates
+          git commit -m "Automated Daily HR Update" || echo "No changes to commit"
+          git push
