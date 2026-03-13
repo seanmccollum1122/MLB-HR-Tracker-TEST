@@ -4,31 +4,31 @@ on:
   schedule:
     # 12:00 UTC is 8:00 AM ET (Standard Time)
     - cron: '0 12 * * *'
-  workflow_dispatch: # This adds a "Run" button so you can test it manually
+  workflow_dispatch: # Allows you to run it manually for testing
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated from v3 to v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Updated from v4 to v5
         with:
-          python-version: '3.9'
+          python-version: '3.11' # Using a modern Python version
 
       - name: Install Dependencies
         run: |
           pip install requests pandas openpyxl
 
       - name: Run Scraper
-        run: python mlb_scraper.py # Make sure this matches your script's filename
+        run: python mlb_scraper.py
 
       - name: Commit and Push Excel File
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add MLB_2026_Team_Power.xlsx # Match the filename your script creates
+          git add MLB_2026_Team_Power.xlsx
           git commit -m "Automated Daily HR Update" || echo "No changes to commit"
           git push
