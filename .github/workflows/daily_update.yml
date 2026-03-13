@@ -2,17 +2,16 @@ name: Daily MLB HR Sync
 
 on:
   schedule:
-    # 12:00 UTC is 8:00 AM ET
     - cron: '0 12 * * *'
   workflow_dispatch:
-
-# This tells the GitHub Runner to use Node 24 for all steps immediately
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # We move the 'env' here to make it strictly applied to this job
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4 
